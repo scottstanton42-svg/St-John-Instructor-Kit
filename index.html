@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#d71920">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="white">
+  <title>St John Instructor Kit — Milestone 2</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark" aria-label="St John cross">
+      <svg viewBox="0 0 100 100" role="img">
+        <path d="M36 5h28v31h31v28H64v31H36V64H5V36h31z" fill="#d71920"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">St John</div>
+      <div class="brand-sub">Ambulance Queensland</div>
+    </div>
+  </div>
+  <div class="milestone">MILESTONE 2</div>
+</header>
+
+<main class="shell">
+  <section class="hero">
+    <div>
+      <p class="eyebrow">INSTRUCTOR KIT</p>
+      <h1>Course day at a glance</h1>
+      <p class="hero-copy">Course checklists, teaching topics, equipment and wind-down tasks — built for quick use on an iPad.</p>
+    </div>
+    <div class="status-card">
+      <span id="progressLabel">0%</span>
+      <small>course progress</small>
+      <div class="progress"><div id="progressBar"></div></div>
+    </div>
+  </section>
+
+  <nav class="tabs" aria-label="Main navigation">
+    <button class="tab active" data-view="today">Today</button>
+    <button class="tab" data-view="courses">Courses</button>
+    <button class="tab" data-view="equipment">Equipment</button>
+    <button class="tab" data-view="settings">Settings</button>
+  </nav>
+
+  <section id="today" class="view active">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">TODAY</p>
+        <h2 id="todayCourseName">Provide First Aid</h2>
+        <p id="todayCourseCodes" class="muted">HLTAID009 · HLTAID010 · HLTAID011</p>
+      </div>
+      <select id="courseSelect" class="select"></select>
+    </div>
+
+    <div class="grid three">
+      <button class="feature-card" data-jump="teaching">
+        <span class="icon">✓</span>
+        <span><strong>Teaching checklist</strong><small>Work through today's course</small></span>
+      </button>
+      <button class="feature-card" data-jump="equipment">
+        <span class="icon">▣</span>
+        <span><strong>Pack equipment</strong><small>Check before leaving</small></span>
+      </button>
+      <button class="feature-card" data-jump="winddown">
+        <span class="icon">↺</span>
+        <span><strong>Wind down</strong><small>Paperwork & clean-up</small></span>
+      </button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <div>
+          <p class="eyebrow">QUICK CHECK</p>
+          <h3>Course checklist</h3>
+        </div>
+        <button id="resetCourse" class="ghost danger">Reset course</button>
+      </div>
+      <div id="todayChecklist"></div>
+    </div>
+  </section>
+
+  <section id="courses" class="view">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">COURSE LIBRARY</p>
+        <h2>Courses</h2>
+        <p class="muted">Current course/unit structure checked against St John Queensland course information.</p>
+      </div>
+    </div>
+    <div id="courseCards" class="course-list"></div>
+  </section>
+
+  <section id="equipment" class="view">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">EQUIPMENT</p>
+        <h2>Pack & prepare</h2>
+        <p class="muted">Edit your own kit list. Changes are saved on this device.</p>
+      </div>
+      <button id="addEquipment" class="primary">+ Add item</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <div>
+          <p class="eyebrow">BEFORE LEAVING HOME</p>
+          <h3 id="equipmentCourseTitle">Provide First Aid equipment</h3>
+        </div>
+        <button id="clearEquipment" class="ghost danger">Clear checks</button>
+      </div>
+      <div id="equipmentList"></div>
+    </div>
+  </section>
+
+  <section id="settings" class="view">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">SETTINGS</p>
+        <h2>Instructor preferences</h2>
+        <p class="muted">This milestone keeps the app simple and device-first.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="setting-row">
+        <div><strong>Instructor name</strong><small>Shown only on this device</small></div>
+        <input id="instructorName" class="input" placeholder="Enter name">
+      </div>
+      <div class="setting-row">
+        <div><strong>Use St John branding</strong><small>Prototype branding for this instructor tool</small></div>
+        <span class="badge">St John red</span>
+      </div>
+      <div class="notice">
+        <strong>Clinical content note</strong>
+        <p>This prototype is a teaching/checklist tool. Always use the current St John Queensland facilitator materials and applicable Australian Resuscitation Council guidance when delivering training. The course/unit information in this milestone was checked against current St John Queensland course pages.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>St John Instructor Kit</span>
+  <span>Milestone 2 prototype</span>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
