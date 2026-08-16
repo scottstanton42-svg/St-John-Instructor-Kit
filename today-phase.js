@@ -8,6 +8,8 @@
     #todayPhaseCard .phase-banner small{display:block;color:var(--muted);margin-top:4px}
     #todayPhaseCard .phase-status{font-size:12px;font-weight:800;padding:8px 11px;border-radius:999px;background:var(--blue-soft);color:#78baf0;white-space:nowrap}
     #todayPhaseCard .phase-status.complete{background:#163b2d;color:#5ee09b}
+    #todayPhaseCard .phase-collapse{width:48px;height:48px;border:1px solid #43515d;background:#202a33;color:#d8e0e6;border-radius:10px;font-weight:900;font-size:20px;touch-action:manipulation;cursor:pointer;flex:0 0 auto}
+    #todayPhaseCard .phase-collapse:hover{background:var(--card-light)}
     #todayPhaseCard .phase-row{display:flex;align-items:center;gap:12px;padding:14px 4px;border-top:1px solid #394650;min-height:66px}
     #todayPhaseCard .phase-row:first-child{border-top:0}
     #todayPhaseCard .phase-row input[type=checkbox]{width:32px;height:32px;min-width:32px;accent-color:#35c978;cursor:pointer;touch-action:manipulation}
@@ -26,6 +28,7 @@
 
   state.deletedTopics=state.deletedTopics||{};
   state.deletedPackDown=state.deletedPackDown||{};
+  state.todayCollapsed=state.todayCollapsed||{};
 
   function deleted(set,key){return !!(set&&set[key])}
   function topicItems(){
@@ -84,6 +87,12 @@
 
   function reorder(kind,index,dir){if(typeof moveItem==='function')moveItem(kind==='prep'?'equipment':kind==='teach'?'teaching':'pack',index,dir)}
 
+  function toggleCollapsed(phase){
+    const key=state.course+'-'+phase;
+    state.todayCollapsed[key]=!state.todayCollapsed[key];
+    save();
+  }
+
   function render(){
     const old=document.getElementById('todayPhaseCard');if(old)old.remove();
     const anchor=document.querySelector('#today .grid.three');if(!anchor)return;
@@ -95,9 +104,12 @@
       pack:{title:'Pack down checklist',desc:'Finish the course, clean up, document and submit everything.',status:'FINAL PHASE',kind:'pack',items:packItems()},
       done:{title:'Course complete',desc:'Preparation, course content and pack down are all complete.',status:'COMPLETE',kind:null,items:[]}
     };
-    const cfg=configs[phase];let rows='';
+    const cfg=configs[phase];
+    const collapseKey=state.course+'-'+phase;
+    const collapsed=phase!=='done' && !!state.todayCollapsed[collapseKey];
+    let rows='';
     if(phase==='done')rows='<div class="phase-complete-message">✓ All three course phases are complete for today.</div>';
-    else rows=cfg.items.map((item,i)=>{
+    else if(!collapsed)rows=cfg.items.map((item,i)=>{
       const raw=cfg.kind==='prep'?item:(item.value);
       const text=cfg.kind==='prep'?(raw.text||raw):(Array.isArray(raw)?raw[0]:raw);
       const detail=Array.isArray(raw)?(raw[1]||''):'';
@@ -105,14 +117,17 @@
       return `<div class="phase-row ${checked?'done':''}" data-index="${i}"><input type="checkbox" ${checked?'checked':''} aria-label="Complete item"><span class="phase-label">${text}${detail?`<span class="phase-detail">${detail}</span>`:''}</span><span class="phase-controls"><button type="button" class="phase-up" aria-label="Move item up">▲</button><button type="button" class="phase-down" aria-label="Move item down">▼</button><button type="button" class="phase-delete" aria-label="Delete item">✕</button></span></div>`
     }).join('');
     const type=cfg.kind==='prep'?'equipment':cfg.kind==='teach'?'teaching':'packdown';
-    card.innerHTML=`<div class="phase-banner"><div><p class="eyebrow">TODAY'S ACTIVE CHECKLIST</p><h3>${cfg.title}</h3><small>${cfg.desc}</small></div><span class="phase-status ${phase==='done'?'complete':''}">${cfg.status}</span></div><div class="today-phase-list">${rows}</div>${phase!=='done'?`<div class="phase-actions"><button type="button" class="primary" id="todayPhaseAdd">+ Add item</button><button type="button" class="ghost" onclick="printChecklist('${type}')">🖨 Print checklist</button><button type="button" class="ghost" onclick="emailChecklist('${type}')">✉ Email a copy</button></div>`:''}`;
+    card.innerHTML=`<div class="phase-banner"><div><p class="eyebrow">TODAY'S ACTIVE CHECKLIST</p><h3>${cfg.title}</h3><small>${cfg.desc}</small></div><div style="display:flex;align-items:center;gap:8px"><span class="phase-status ${phase==='done'?'complete':''}">${cfg.status}</span>${phase!=='done'?`<button type="button" class="phase-collapse" id="todayPhaseCollapse" aria-expanded="${!collapsed}" aria-label="${collapsed?'Expand':'Collapse'} checklist">${collapsed?'＋':'−'}</button>`:''}</div></div><div class="today-phase-list">${rows}</div>${phase!=='done'&&!collapsed?`<div class="phase-actions"><button type="button" class="primary" id="todayPhaseAdd">+ Add item</button><button type="button" class="ghost" onclick="printChecklist('${type}')">🖨 Print checklist</button><button type="button" class="ghost" onclick="emailChecklist('${type}')">✉ Email a copy</button></div>`:''}`;
     anchor.insertAdjacentElement('afterend',card);
     if(phase!=='done'){
-      card.querySelectorAll('input[type=checkbox]').forEach(box=>box.addEventListener('change',()=>toggle(cfg.kind,Number(box.closest('.phase-row').dataset.index),box.checked)));
-      card.querySelectorAll('.phase-up').forEach(b=>b.addEventListener('click',()=>reorder(cfg.kind,Number(b.closest('.phase-row').dataset.index),-1)));
-      card.querySelectorAll('.phase-down').forEach(b=>b.addEventListener('click',()=>reorder(cfg.kind,Number(b.closest('.phase-row').dataset.index),1)));
-      card.querySelectorAll('.phase-delete').forEach(b=>b.addEventListener('click',()=>deleteItem(cfg.kind,Number(b.closest('.phase-row').dataset.index))));
-      card.querySelector('#todayPhaseAdd').addEventListener('click',()=>addItem(cfg.kind));
+      card.querySelector('#todayPhaseCollapse').addEventListener('click',()=>toggleCollapsed(phase));
+      if(!collapsed){
+        card.querySelectorAll('input[type=checkbox]').forEach(box=>box.addEventListener('change',()=>toggle(cfg.kind,Number(box.closest('.phase-row').dataset.index),box.checked)));
+        card.querySelectorAll('.phase-up').forEach(b=>b.addEventListener('click',()=>reorder(cfg.kind,Number(b.closest('.phase-row').dataset.index),-1)));
+        card.querySelectorAll('.phase-down').forEach(b=>b.addEventListener('click',()=>reorder(cfg.kind,Number(b.closest('.phase-row').dataset.index),1)));
+        card.querySelectorAll('.phase-delete').forEach(b=>b.addEventListener('click',()=>deleteItem(cfg.kind,Number(b.closest('.phase-row').dataset.index))));
+        card.querySelector('#todayPhaseAdd').addEventListener('click',()=>addItem(cfg.kind));
+      }
     }
   }
 
