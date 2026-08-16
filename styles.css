@@ -50,6 +50,10 @@ button{cursor:pointer}
   height:42px;
   display:grid;
   place-items:center;
+}.brand-mark img{
+  width:42px;
+  height:42px;
+  object-fit:contain;
 }
 
 .brand-mark svg{
