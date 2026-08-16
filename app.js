@@ -158,17 +158,65 @@ const defaultEquipment = [
   "Water / consumables as required"
 ];
 
+const courseEquipment = {
+  qldfire: [
+    "BEFORE LEAVING HOME — Course manuals / learner materials",
+    "BEFORE LEAVING HOME — Attendance / assessment paperwork",
+    "BEFORE LEAVING HOME — Instructor laptop or tablet + charger",
+    "BEFORE LEAVING HOME — Adult manikins",
+    "BEFORE LEAVING HOME — Child/infant manikins as required",
+    "BEFORE LEAVING HOME — AED trainer",
+    "BEFORE LEAVING HOME — Oxygen cylinder / delivery equipment",
+    "BEFORE LEAVING HOME — Bag-valve-mask and airway training equipment",
+    "BEFORE LEAVING HOME — Pocket masks / face shields",
+    "BEFORE LEAVING HOME — Gloves and PPE",
+    "BEFORE LEAVING HOME — Trauma / major bleeding training kit",
+    "BEFORE LEAVING HOME — Training tourniquets",
+    "BEFORE LEAVING HOME — Haemostatic dressing training supplies",
+    "BEFORE LEAVING HOME — Gauze / wound-packing training supplies",
+    "BEFORE LEAVING HOME — Pressure dressings / bandages",
+    "BEFORE LEAVING HOME — Cleaning / disinfecting supplies",
+    "SET UP — Resuscitation station and AED trainer",
+    "SET UP — Oxygen station and airway equipment",
+    "SET UP — Major bleeding / tourniquet training station",
+    "SET UP — Haemostatic dressing practice station",
+    "SET UP — Assessment paperwork and learner materials",
+    "TEACHING — CPR / AED demonstration equipment ready",
+    "TEACHING — Oxygen therapy equipment ready for demonstration",
+    "TEACHING — Tourniquet training equipment ready",
+    "TEACHING — Haemostatic dressing training equipment ready",
+    "TEACHING — Trauma scenario equipment ready",
+    "PACK DOWN — Account for all tourniquets and haemostatic dressing training equipment",
+    "PACK DOWN — Clean and disinfect manikins / airway equipment",
+    "PACK DOWN — Secure oxygen equipment and return cylinders appropriately",
+    "PACK DOWN — Pack AED trainer and resuscitation equipment",
+    "ADMIN — Complete attendance / assessment documentation",
+    "ADMIN — Record equipment issues or consumables requiring replacement"
+  ]
+};
+
 const stateKey="sj-instructor-kit-m2";
 let state = JSON.parse(localStorage.getItem(stateKey) || "{}");
 state.course = state.course || "pfa";
 state.checks = state.checks || {};
-state.equipment = state.equipment || defaultEquipment.map(x=>({text:x,done:false}));
+
+// Keep existing equipment lists intact, while giving each course its own saved checklist.
+if (!state.equipmentByCourse) {
+  state.equipmentByCourse = {default: (state.equipment || defaultEquipment.map(x=>({text:x,done:false}))) };
+}
 state.name = state.name || "";
 
 function save(){ localStorage.setItem(stateKey,JSON.stringify(state)); updateAll(); }
 
 function course(){ return courses[state.course]; }
 function courseChecks(){ return state.checks[state.course] || {}; }
+function equipmentListForCourse(){
+  if (!state.equipmentByCourse[state.course]) {
+    const source = courseEquipment[state.course] || defaultEquipment;
+    state.equipmentByCourse[state.course] = source.map(x=>({text:x,done:false}));
+  }
+  return state.equipmentByCourse[state.course];
+}
 
 function renderCourseSelect(){
   const el=document.getElementById("courseSelect");
@@ -220,15 +268,16 @@ function selectCourse(id){state.course=id;save();showView("today");}
 function renderEquipment(){
   document.getElementById("equipmentCourseTitle").textContent=course().name+" equipment";
   const list=document.getElementById("equipmentList");
-  list.innerHTML=state.equipment.map((item,i)=>`
+  const equipment=equipmentListForCourse();
+  list.innerHTML=equipment.map((item,i)=>`
     <div class="equipment-row">
       <input type="checkbox" ${item.done?"checked":""} data-eq="${i}">
       <input type="text" value="${escapeHtml(item.text)}" data-text="${i}" aria-label="Equipment item">
       <button class="remove" data-remove="${i}" aria-label="Remove item">×</button>
     </div>`).join("");
-  list.querySelectorAll("[data-eq]").forEach(el=>el.onchange=e=>{state.equipment[e.target.dataset.eq].done=e.target.checked;save()});
-  list.querySelectorAll("[data-text]").forEach(el=>el.onchange=e=>{state.equipment[e.target.dataset.text].text=e.target.value;save()});
-  list.querySelectorAll("[data-remove]").forEach(el=>el.onclick=e=>{state.equipment.splice(+e.target.dataset.remove,1);save()});
+  list.querySelectorAll("[data-eq]").forEach(el=>el.onchange=e=>{equipment[e.target.dataset.eq].done=e.target.checked;save()});
+  list.querySelectorAll("[data-text]").forEach(el=>el.onchange=e=>{equipment[e.target.dataset.text].text=e.target.value;save()});
+  list.querySelectorAll("[data-remove]").forEach(el=>el.onclick=e=>{equipment.splice(+e.target.dataset.remove,1);save()});
 }
 function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
 function renderSettings(){document.getElementById("instructorName").value=state.name;document.getElementById("instructorName").onchange=e=>{state.name=e.target.value;save()}}
@@ -251,10 +300,10 @@ document.getElementById("resetCourse").onclick=()=>{
   if(confirm("Reset all teaching checklist ticks for this course?")){state.checks[state.course]={};save();}
 };
 document.getElementById("clearEquipment").onclick=()=>{
-  state.equipment.forEach(x=>x.done=false);save();
+  equipmentListForCourse().forEach(x=>x.done=false);save();
 };
 document.getElementById("addEquipment").onclick=()=>{
-  state.equipment.push({text:"New equipment item",done:false});save();
+  equipmentListForCourse().push({text:"New equipment item",done:false});save();
   setTimeout(()=>{const inputs=document.querySelectorAll("[data-text]");inputs[inputs.length-1]?.focus()},50);
 };
 updateAll();
