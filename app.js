@@ -112,6 +112,27 @@ const courses = {
       ["Assessment","Complete required practical/theory assessment"],
       ["Wrap-up","Questions, feedback and completion/admin"]
     ]
+  },
+  qldfire: {
+    name:"QLD Fire Department — First Aid, Advanced Resuscitation & Oxygen Therapy",
+    codes:["HLTAID011","HLTAID015"],
+    duration:"Specialty course — combined first aid and advanced resuscitation / oxygen therapy",
+    topics:[
+      ["Course orientation","Course overview, operational safety, scope and learner expectations"],
+      ["DRSABCD & scene safety","Emergency action plan, scene assessment and casualty priorities"],
+      ["CPR & AED","Adult CPR, AED use and team-based resuscitation practice"],
+      ["Airway management","Airway assessment, management and appropriate adjuncts"],
+      ["Oxygen therapy","Oxygen equipment, indications, safety and practical skills"],
+      ["Bag-mask ventilation","Equipment setup and effective ventilation"],
+      ["Medical emergencies","Recognition, first aid management and escalation"],
+      ["Trauma & major bleeding","Recognition and immediate management of serious bleeding"],
+      ["Tourniquets","Tourniquet equipment, application and practical scenario training"],
+      ["Haemostatic dressings","Haemostatic dressing use, packing principles and practical application"],
+      ["Trauma scenarios","Integrated casualty assessment, bleeding control, resuscitation and oxygen therapy"],
+      ["Team response","Role allocation, communication and coordinated casualty management"],
+      ["Assessment","Complete required practical/theory assessment activities"],
+      ["Wrap-up","Equipment recovery, documentation, feedback and completion/admin"]
+    ]
   }
 };
 
