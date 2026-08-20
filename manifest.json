@@ -1,9 +1,9 @@
 {
-  "name":"St John Instructor Kit",
-  "short_name":"Instructor Kit",
+  "name":"Australian First Aid Instructor Buddy",
+  "short_name":"First Aid Buddy",
   "start_url":"./index.html",
   "display":"standalone",
-  "background_color":"#f5f6f8",
+  "background_color":"#0e1419",
   "theme_color":"#d71920",
-  "description":"First Aid Instructor course and equipment checklist prototype."
+  "description":"Australian first aid instructor course-day checklist and completion buddy."
 }
