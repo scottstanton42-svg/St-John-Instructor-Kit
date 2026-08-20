@@ -1,20 +1,3 @@
-/* Milestone 5 home-screen treatment: match the existing Instructor Kit dark palette. */
-#wf{background:#0e1419!important;color:#f3f6f8!important;position:fixed!important;isolation:isolate}
-#wf::before{content:"";position:fixed;inset:0;background-image:url('https://stjohn.org.au/app/uploads/2025/08/SJA_T_AT_WhatIs.jpg');background-size:cover;background-position:center 45%;background-repeat:no-repeat;opacity:.12;pointer-events:none;z-index:-1}
-#wf .wf{position:relative;z-index:1}
-#wf .wfbrand{margin:20px 0 30px}
-#wf .wfbrand h1{color:#f3f6f8;font-size:32px;letter-spacing:-.03em}
-#wf .wfbrand p{color:#aeb8c2;margin:8px 0 0}
-#wf .wcard{background:#242d35!important;border:1px solid #3d4a55!important;color:#f3f6f8;box-shadow:0 10px 30px rgba(0,0,0,.28)!important}
-#wf .wcard h2{color:#f3f6f8}
-#wf .wcard p,#wf .wcard small{color:#aeb8c2}
-#wf .wbtn.ws{background:#202a33!important;border:1px solid #43515d!important;color:#d8e0e6}
-#wf .wbtn.ws:hover{background:#303b45!important}
-#wf .wbtn.wp{background:#d71920!important;color:#fff}
-#wf .wbtn.wp:hover{background:#b51218!important}
-#wf .wfld label{color:#f3f6f8}
-#wf .wfld input,#wf .wfld select{background:#202a33!important;border:1px solid #43515d!important;color:#f3f6f8!important}
-#wf .wfld input:focus,#wf .wfld select:focus{border-color:#3b82c4!important;outline:none;box-shadow:0 0 0 3px rgba(59,130,196,.18)}
-#wf .wdetails .wd{background:#1b252e!important;color:#f3f6f8}
-#wf .wdetails .wd small{color:#aeb8c2}
-@media(max-width:650px){#wf .wfbrand h1{font-size:27px}}
+/* Australian First Aid Instructor Buddy landing treatment */
+#buddyOverlay{color:#f3f6f8}#buddyOverlay::before{content:"";position:fixed;inset:0;background-image:linear-gradient(rgba(8,13,17,.82),rgba(8,13,17,.82)),url('hero-cpr.svg');background-size:cover;background-position:center;opacity:1;pointer-events:none;z-index:-1}
+#buddyOverlay .buddy-panel{position:relative}#buddyOverlay .buddy-card{background:rgba(23,33,43,.94);backdrop-filter:blur(6px)}
