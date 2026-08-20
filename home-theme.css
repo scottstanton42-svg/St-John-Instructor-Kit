@@ -1,6 +1,6 @@
 /* Milestone 5 home-screen treatment: match the existing Instructor Kit dark palette. */
 #wf{background:#0e1419!important;color:#f3f6f8!important;position:fixed!important;isolation:isolate}
-#wf::before{content:"";position:fixed;inset:0;background-image:url('https://stjohn.org.au/app/uploads/2025/08/SJA_T_AT_WhatIs.jpg');background-size:cover;background-position:center 45%;background-repeat:no-repeat;opacity:.075;pointer-events:none;z-index:-1}
+#wf::before{content:"";position:fixed;inset:0;background-image:url('https://stjohn.org.au/app/uploads/2025/08/SJA_T_AT_WhatIs.jpg');background-size:cover;background-position:center 45%;background-repeat:no-repeat;opacity:.12;pointer-events:none;z-index:-1}
 #wf .wf{position:relative;z-index:1}
 #wf .wfbrand{margin:20px 0 30px}
 #wf .wfbrand h1{color:#f3f6f8;font-size:32px;letter-spacing:-.03em}
