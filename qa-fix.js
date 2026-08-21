@@ -46,6 +46,19 @@
     b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();selectAll(b)},false);
   });
   document.addEventListener('click',e=>{const b=e.target.closest?.('.stable-actions .all');if(!b)return;e.preventDefault();e.stopImmediatePropagation();selectAll(b)},true);
+  document.addEventListener('change',e=>{
+    const input=e.target.closest?.('.stable-row input[type="checkbox"]');
+    if(!input)return;
+    setTimeout(()=>{
+      const row=input.closest('.stable-row');
+      const card=row?.closest('.stable-checklist');
+      if(!card)return;
+      const kind=kindForCard(card);
+      const p=window.buddyPhase?.();
+      if((kind==='load'&&p==='setup')||(kind==='setup'&&p==='teach')||(kind==='teach'&&p==='pack'))showWorkflowTransition(kind);
+      else if(kind==='pack'&&p==='done')showWorkflowTransition(kind);
+    },0);
+  });
   const boot=()=>{hideLegacy();bindSelectAll();setTimeout(()=>{hideLegacy();bindSelectAll()},50);setTimeout(()=>{hideLegacy();bindSelectAll()},250);setTimeout(()=>{hideLegacy();bindSelectAll()},800)};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
   window.addEventListener('load',boot);
