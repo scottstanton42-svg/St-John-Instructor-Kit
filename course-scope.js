@@ -26,4 +26,5 @@
   if(!state.equipmentByCourse.pfaaa) state.equipmentByCourse.pfaaa=asthmaEquipment.map(text=>({text,done:false}));
   if(!courses[state.course]) state.course="pfa";
   localStorage.setItem(stateKey,JSON.stringify(state));
+  if(typeof updateAll==='function') updateAll();
 })();
