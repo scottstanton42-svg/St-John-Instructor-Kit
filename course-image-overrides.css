@@ -1,0 +1,15 @@
+/* Course-specific photography. Overrides inline card backgrounds on both the landing page and Course Library. */
+.course-card:nth-child(1){background-image:url("17.jpg")!important}
+.course-card:nth-child(2){background-image:url("12.jpg")!important}
+.course-card:nth-child(3){background-image:url("17.jpg")!important}
+.course-card:nth-child(4){background-image:url("19.jpg")!important}
+.course-card:nth-child(5){background-image:url("21.jpg")!important}
+.course-card:nth-child(6){background-image:url("18.jpg")!important}
+.course-card:nth-child(7){background-image:url("22.jpg")!important}
+.course-card:nth-child(8){background-image:url("Ventolin.jpg")!important}
+.course-card:nth-child(9){background-image:url("Epipen.jpg")!important}
+.course-card:nth-child(10){background-image:url("22.jpg")!important}
+/* Keep the supplied photography subdued so course text remains the hero. */
+.landing-course-card,.course-card{background-size:cover;background-position:center}
+.course-card::before{background:rgba(7,12,16,.80)!important}
+.course-card::after{background:linear-gradient(90deg,rgba(7,12,16,.90) 0%,rgba(7,12,16,.74) 55%,rgba(7,12,16,.52) 100%)!important}
