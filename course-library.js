@@ -1,5 +1,5 @@
 (()=>{
-  const imageMap={cpr:'13.jpg',pfa:'12.jpg',paf:'17.jpg',ar:'11.jpg',ofa:'20.jpg',lvr:'18.jpg',education:'21.jpg',cpraa:'16.jpg',pfaaa:'19.jpg',remote:'22.jpg'};
+  const imageMap={cpr:'17.jpg',pfa:'12.jpg',paf:'19.jpg',ar:'19.jpg',ofa:'21.jpg',lvr:'18.jpg',education:'22.jpg',cpraa:'Ventolin.jpg',pfaaa:'Epipen.jpg',remote:'22.jpg'};
   const labels={cpr:'CPR',pfa:'Provide First Aid',paf:'Provide Advanced First Aid',ar:'Advanced resuscitation & oxygen therapy',ofa:'Occupational first aid',lvr:'Low voltage rescue & CPR',education:'Education & care first aid',cpraa:'CPR with asthma & anaphylaxis',pfaaa:'Provide First Aid with asthma & anaphylaxis',remote:'Remote-area first aid'};
   const order=['cpr','pfa','paf','ar','ofa','lvr','education','cpraa','pfaaa','remote'];
   const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
