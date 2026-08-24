@@ -15,14 +15,24 @@
   };
   const kindForSection=id=>id==='equipment'?'load':id==='setup'?'setup':id==='teach'?'teach':id==='winddown'?'pack':'load';
   const kindForCard=card=>{const section=card?.closest('.view');if(section)return kindForSection(section.id);const label=card?.querySelector('.stable-head .eyebrow')?.textContent?.toLowerCase()||'';return label.includes('load')?'load':label.includes('setup')?'setup':label.includes('teach')?'teach':label.includes('pack')?'pack':null};
-  const transitionText={load:['Ready for Setup','Load Up is complete. Your equipment is checked and you are ready to prepare the classroom.','setup'],setup:['Ready to Teach','Classroom setup is complete. You are ready to begin teaching.','teach'],teach:['Ready to Pack Down','Teaching and assessment are complete. You are ready to finish the course and pack down.','winddown']};
+  const transitionText={load:['Ready for Setup','Load Up is complete. Your equipment is checked and you are ready to prepare the classroom.','setup'],setup:['Ready to Teach','Classroom setup is complete. You are ready to begin teaching.','teach'],teach:['Ready to Pack Down','Teaching and assessment are complete. Please confirm how many students attended, then continue to pack down.','winddown']};
   const showWorkflowTransition=(kind)=>{
     const data=transitionText[kind]; if(!data)return false;
     document.getElementById('buddyStageTransition')?.remove();
     const o=document.createElement('div'); o.id='buddyStageTransition';
-    o.innerHTML=`<div class="buddy-overlay"><div class="buddy-panel"><div class="buddy-transition-icon">✓</div><p class="eyebrow">STAGE COMPLETE</p><h1>${data[0]}</h1><p class="buddy-sub">${data[1]}</p><div class="buddy-card"><button class="buddy-btn primary" id="continueStage">Continue to ${data[2]==='setup'?'Setup':data[2]==='teach'?'Teach':'Pack Down'}</button></div></div></div>`;
+    const existing=(typeof state!=='undefined'&&state.courseDetails&&state.courseDetails[state.course]?.studentsAttended!==undefined)?state.courseDetails[state.course].studentsAttended:'';
+    const attendance=kind==='teach'?`<label class="buddy-label" style="display:block;text-align:left;margin:18px 0 8px">Students attended<input id="studentsAttended" class="buddy-input" type="number" min="0" step="1" inputmode="numeric" value="${existing}" placeholder="Enter number of students"></label>`:'';
+    o.innerHTML=`<div class="buddy-overlay"><div class="buddy-panel"><div class="buddy-transition-icon">✓</div><p class="eyebrow">STAGE COMPLETE</p><h1>${data[0]}</h1><p class="buddy-sub">${data[1]}</p>${attendance}<div class="buddy-card"><button class="buddy-btn primary" id="continueStage">Continue to ${data[2]==='setup'?'Setup':data[2]==='teach'?'Teach':'Pack Down'}</button></div></div></div>`;
     document.body.appendChild(o);
-    o.querySelector('#continueStage').onclick=()=>{o.remove();window.showBuddyView?.(data[2]);};
+    o.querySelector('#continueStage').onclick=()=>{
+      if(kind==='teach'){
+        const input=o.querySelector('#studentsAttended');
+        const value=input?.value?.trim()??'';
+        if(value===''||!/^\d+$/.test(value)){input?.focus();return;}
+        state.courseDetails=state.courseDetails||{};state.courseDetails[state.course]=state.courseDetails[state.course]||{};state.courseDetails[state.course].studentsAttended=Number(value);localStorage.setItem(stateKey,JSON.stringify(state));
+      }
+      o.remove();window.showBuddyView?.(data[2]);
+    };
     return true;
   };
   const selectAll=button=>{
