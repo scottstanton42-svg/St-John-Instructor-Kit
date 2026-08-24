@@ -8,7 +8,7 @@
 .course-card[data-course-image="education"]{background-image:url("22.jpg")!important}
 .course-card[data-course-image="cpraa"]{background-image:url("Ventolin.jpg")!important}
 .course-card[data-course-image="pfaaa"]{background-image:url("Epipen.jpg")!important}
-.course-card[data-course-image="remote"]{background-image:url("22.jpg")!important}
+.course-card[data-course-image="remote"]{background-image:url("11.jpg")!important}
 .landing-course-card,.course-card{background-size:cover;background-position:center}
 .course-card::before{background:rgba(7,12,16,.80)!important}
 .course-card::after{background:linear-gradient(90deg,rgba(7,12,16,.90) 0%,rgba(7,12,16,.74) 55%,rgba(7,12,16,.52) 100%)!important}
