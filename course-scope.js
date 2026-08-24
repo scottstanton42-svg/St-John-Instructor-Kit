@@ -4,6 +4,13 @@
   delete packDownByCourse.qldfire;
   delete packDownByCourse.powerlink;
 
+  // Align existing advanced/remote entries with the current QLD course offerings.
+  courses.paf.name="Provide Advanced First Aid + Provide Advanced Resuscitation";
+  courses.paf.codes=["HLTAID009","HLTAID010","HLTAID011","HLTAID014","HLTAID015"];
+  courses.paf.duration="3 days face-to-face";
+  courses.remote.codes=["HLTAID009","HLTAID010","HLTAID011","HLTAID013"];
+  courses.remote.duration="3 days face-to-face";
+
   courses.education={name:"Education & Care First Aid with PFA",codes:["HLTAID009","HLTAID010","HLTAID011","HLTAID012"],duration:"1 day face-to-face",topics:[
     ["Course orientation","Child-focused first aid, scope, safety and expectations"],["DRSABCD","Emergency action plan, scene safety and casualty priorities"],["Adult CPR","Adult CPR skills and learner practice"],["Child CPR","Child CPR skills and learner practice"],["Infant CPR","Infant CPR skills and learner practice"],["AED","Safe AED use with adult, child and infant considerations"],["Asthma emergencies","Recognition, first aid response and asthma management considerations"],["Anaphylaxis","Recognition, emergency response and adrenaline auto-injector considerations"],["Common childhood injuries","Falls, wounds, bleeding, burns, fractures and other common injuries"],["Medical emergencies","Recognition and first aid response for common medical presentations"],["Choking","Recognition and age-appropriate first aid response"],["Assessment","Complete required practical and theory assessment activities"],["Wrap-up","Questions, feedback, documentation and completion/admin"]
   ]};
