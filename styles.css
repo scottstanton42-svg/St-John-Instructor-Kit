@@ -23,10 +23,10 @@ html,body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe
 body{min-height:100vh}
 button,input,select{font:inherit}
 button{cursor:pointer}
-.topbar{height:74px;background:#0a1015;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(18px,calc((100vw - 1180px)/2));position:sticky;top:0;z-index:20}
+.topbar{height:auto;min-height:74px;background:#0a1015;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(18px,calc((100vw - 1180px)/2));position:sticky;top:0;z-index:20}
 .brand{display:flex;align-items:center;gap:10px}
-.brand-mark{width:42px;height:42px;display:grid;place-items:center;overflow:hidden;flex-shrink:0}
-.brand-mark img{width:42px !important;height:42px !important;max-width:42px !important;max-height:42px !important;object-fit:contain;display:block}
+.brand-mark{width:140px;height:112px;display:grid;place-items:center;overflow:visible;flex-shrink:0}
+.brand-mark img{width:140px !important;height:112px !important;max-width:140px !important;max-height:112px !important;object-fit:contain;display:block}
 .brand-mark svg{width:40px;height:40px}
 .brand-name{font-weight:800;font-size:21px;line-height:20px;color:var(--red)}
 .brand-sub{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#b8c1ca}
@@ -119,7 +119,7 @@ footer{border-top:1px solid var(--line);background:#0a1015;padding:18px max(18px
   .grid.three,.course-list{grid-template-columns:1fr}
   .section-head{align-items:stretch;flex-direction:column}
   .select{width:100%}
-  .topbar{padding:0 14px}
+  .topbar{padding:6px 14px}
   .milestone{display:none}
 }
 @media(min-width:801px){.grid.three .feature-card{min-height:92px}}
